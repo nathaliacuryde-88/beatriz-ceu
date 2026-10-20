@@ -1,8 +1,9 @@
 import { Element } from '../astro/constants';
 
 /**
- * Palette — a periwinkle wash with the app's own blue as its one loud voice,
- * and a bright cyan reserved for the one real photograph in the app.
+ * Palette — a soft, slightly rosy lilac wash with the app's own blue as its
+ * one loud voice, and a bright cyan reserved for the one real photograph in
+ * the app.
  *
  * Blue is the interface talking: headlines, eyebrows, the divider star's
  * neighbour, every info pill, the active tab. Cyan marks anything meant to
@@ -11,7 +12,7 @@ import { Element } from '../astro/constants';
  * washes and borders. Ink and muted text are both drawn from the same
  * blue-leaning dark, so even body copy belongs to this family.
  */
-const PAPER = '#D5DAFD';
+const PAPER = '#E8D6F0';
 const BLUE = '#1A17C4';
 const INK = '#182042';
 const MUTED = '#626B8F';

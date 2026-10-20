@@ -38,19 +38,6 @@ export default function PortraitScreen({ chart }: { chart: Chart }) {
       <PageHeader />
 
       {/* The opening screen of the app, so it introduces her first. */}
-      <Reveal distance={14}>
-        <View style={styles.nameBlock}>
-          <Body size={typography.pageTitle} style={styles.nameLine}>
-            {firstName}
-          </Body>
-          {restName.length > 0 && (
-            <Body size={typography.pageTitle} style={styles.nameLine}>
-              {restName.join(' ')}
-            </Body>
-          )}
-        </View>
-      </Reveal>
-
       <View style={styles.photoWrap}>
         <Pop duration={760}>
           <Breathe periodMs={4600} scale={1.025}>
@@ -79,6 +66,19 @@ export default function PortraitScreen({ chart }: { chart: Chart }) {
           </Parallax>
         </View>
       </View>
+
+      <Reveal distance={14}>
+        <View style={styles.nameBlock}>
+          <Body size={typography.pageTitle} style={styles.nameLine}>
+            {firstName}
+          </Body>
+          {restName.length > 0 && (
+            <Body size={typography.pageTitle} style={styles.nameLine}>
+              {restName.join(' ')}
+            </Body>
+          )}
+        </View>
+      </Reveal>
 
       <Body muted size={14} style={styles.caption}>
         {caption}
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   nameBlock: {
     alignItems: 'center',
-    marginTop: spacing(2),
+    marginTop: spacing(2.5),
   },
   nameLine: {
     fontFamily: fonts.light,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   photoWrap: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: spacing(3),
+    marginTop: spacing(1.5),
   },
   photoCircle: {
     backgroundColor: colors.accentSoft,
