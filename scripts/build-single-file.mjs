@@ -5,7 +5,7 @@
  * at runtime, and no install. Everything (JS, fonts) is inlined.
  *
  *   npx expo export --platform web --output-dir dist --clear
- *   node scripts/build-single-file.mjs dist anton-sky.html
+ *   node scripts/build-single-file.mjs dist beatriz-ceu.html
  *
  * Font subsetting needs Python fontTools (`pip install fonttools brotli`).
  * Without it the script still runs and simply skips the inlining, leaving the
@@ -18,7 +18,7 @@ import os from 'node:os';
 import path from 'node:path';
 
 const WEB = process.argv[2] ?? 'dist';
-const OUT = process.argv[3] ?? 'anton-sky.html';
+const OUT = process.argv[3] ?? 'beatriz-ceu.html';
 // `--fragment` omits <html>/<head>/<body> for hosts that supply their own
 // document shell. The default is a complete, standalone page.
 const FRAGMENT = process.argv.includes('--fragment');
@@ -41,7 +41,7 @@ const UNICODES = [
 ].join(',');
 
 function buildFontCss() {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'anton-fonts-'));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'beatriz-fonts-'));
   const rules = [];
 
   for (const [family, dir] of FACES) {
@@ -113,19 +113,19 @@ const favicon = fs.existsSync('assets/favicon.png')
 const head = FRAGMENT
   ? ''
   : `<!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#D5DAFD">
-<meta name="description" content="The natal chart of Anton Duque Estrada — 26 July 2026, Filderstadt. EN/PT.">
+<meta name="description" content="O mapa astral da Beatriz — 18 de outubro de 2026, São Paulo.">
 ${favicon}
 `;
 
 const tail = FRAGMENT ? '' : '\n</body>\n</html>\n';
 
-const body = `<title>Anton's Sky · O Céu de Anton</title>
-<style id="anton-fonts">
+const body = `<title>O Céu da Beatriz</title>
+<style id="beatriz-fonts">
 ${fontCss}
 
 /* The app paints its own solid periwinkle; the shell just gets out of the way
@@ -142,7 +142,7 @@ ${FRAGMENT ? '' : '</head>\n<body>'}
 /* expo-font appends its own <style id="expo-generated-fonts"> at runtime. Keep
    ours last in <head> so our rules win the cascade. */
 (function () {
-  var mine = document.getElementById('anton-fonts');
+  var mine = document.getElementById('beatriz-fonts');
   if (!mine) return;
   document.head.appendChild(mine);
   new MutationObserver(function () {
