@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "O Céu da Beatriz",
+    "slug": "beatriz-ceu",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "beatrizceu",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#D5DAFD",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.beatrizceu.app"
+    },
+    "android": {
+      "package": "com.beatrizceu.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#D5DAFD",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#D5DAFD"
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}

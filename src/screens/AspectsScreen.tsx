@@ -1,0 +1,212 @@
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+
+import { ASPECTS, BODIES, BodyKey } from '../astro/constants';
+import { Aspect, Chart } from '../astro/engine';
+import Explainer from '../components/Explainer';
+import { Emphasis } from '../components/motion';
+import PageHeader from '../components/PageHeader';
+import { Body, Card, Divider, Eyebrow, PageTitle } from '../components/ui';
+import { GUIDE } from '../content/guide';
+import { ASPECT_MEANING, BODY_MEANING } from '../content/interpretations';
+import { useLang } from '../i18n/LanguageContext';
+import { aspectColors, colors, radii, spacing } from '../theme/theme';
+
+export default function AspectsScreen({ chart }: { chart: Chart }) {
+  const { t, b, lang } = useLang();
+
+  const nameOf = (key: Aspect['a']) =>
+    key === 'asc'
+      ? lang === 'en'
+        ? 'Ascendant'
+        : lang === 'de'
+          ? 'Aszendent'
+          : 'Ascendente'
+      : key === 'mc'
+        ? lang === 'en'
+          ? 'Midheaven'
+          : lang === 'de'
+            ? 'Medium Coeli'
+            : 'Meio do Céu'
+        : b(BODIES[key as BodyKey].name);
+
+  const glyphOf = (key: Aspect['a']) =>
+    key === 'asc' ? 'ASC' : key === 'mc' ? 'MC' : BODIES[key as BodyKey].glyph;
+
+  /** What the point governs, phrased for someone reading their first chart. */
+  const meaningOf = (key: Aspect['a']) =>
+    key === 'asc'
+      ? lang === 'en'
+        ? 'the way she meets the world'
+        : lang === 'de'
+          ? 'wie sie der Welt begegnet'
+          : 'o jeito como ela encontra o mundo'
+      : key === 'mc'
+        ? lang === 'en'
+          ? 'what the world will see'
+          : lang === 'de'
+            ? 'was die Welt sehen wird'
+            : 'o que o mundo vai ver'
+        : b(BODY_MEANING[key as BodyKey]);
+
+  return (
+    <ScrollView
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+    >
+      <PageHeader />
+      <PageTitle>{t('navAspects')}</PageTitle>
+
+      <View style={styles.explainers}>
+        <Explainer titleKey="aspectsWhat" bodyKey="aspectsBody" />
+        <Explainer titleKey="tensionWhat" bodyKey="tensionBody" />
+        <Explainer titleKey="orbWhat" bodyKey="orbBody" defaultOpen={false} />
+        <Explainer titleKey="applyingWhat" bodyKey="applyingBody" defaultOpen={false} />
+      </View>
+
+      <Divider />
+
+      <Eyebrow color={colors.accent}>{t('tightest')}</Eyebrow>
+      <Body size={12} muted style={styles.legend}>
+        {b(GUIDE.aspectLegend)}
+      </Body>
+
+      <View style={styles.list}>
+        {chart.aspects.map((aspect, i) => {
+          const def = ASPECTS.find((d) => d.key === aspect.key)!;
+          const tone = aspectColors[def.tone];
+          return (
+            <Card key={i} style={styles.card}>
+              <View style={styles.headline}>
+                <Body size={19}>{glyphOf(aspect.a)}</Body>
+                <View style={[styles.aspectBadge, { backgroundColor: tone + '33' }]}>
+                  <Body size={15} style={{ color: colors.ink }}>
+                    {def.glyph}
+                  </Body>
+                </View>
+                <Body size={19}>{glyphOf(aspect.b)}</Body>
+
+                <View style={{ flex: 1 }} />
+
+                <Body size={12} muted>
+                  {t('orb')} {aspect.orb.toFixed(1)}°
+                </Body>
+              </View>
+
+              <Emphasis size={15} color={colors.ink}>
+                {nameOf(aspect.a)} {def.glyph} {nameOf(aspect.b)}
+              </Emphasis>
+
+              <View style={styles.metaRow}>
+                <View style={[styles.toneTag, { backgroundColor: tone + '2E' }]}>
+                  <Body size={11} style={{ color: colors.ink }}>
+                    {b(def.name)}
+                  </Body>
+                </View>
+                <Body size={11} muted>
+                  {aspect.applying ? t('applying') : t('separating')}
+                </Body>
+              </View>
+
+              <Body size={13} muted style={styles.meaning}>
+                {b(ASPECT_MEANING[aspect.key])}
+              </Body>
+
+              {/* Spelled out, so the glyphs are not the only explanation. */}
+              <View style={styles.sentence}>
+                <Body size={13} muted style={styles.sentenceText}>
+                  {meaningOf(aspect.a)}
+                  {lang === 'en' ? ' meeting ' : lang === 'de' ? ' trifft auf ' : ' encontrando '}
+                  {meaningOf(aspect.b)}
+                  {lang === 'en' ? ', at ' : lang === 'de' ? ', bei ' : ', a '}
+                  {def.angle}°
+                  {lang === 'en' ? ' apart.' : lang === 'de' ? ' Abstand.' : ' de distância.'}
+                </Body>
+              </View>
+
+              {/* orb strength: full bar means exact */}
+              <View style={styles.track}>
+                <View
+                  style={[
+                    styles.fill,
+                    {
+                      backgroundColor: tone,
+                      width: `${Math.round((1 - aspect.looseness) * 100)}%`,
+                    },
+                  ]}
+                />
+              </View>
+            </Card>
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  content: {
+    paddingHorizontal: spacing(2),
+    paddingBottom: spacing(14),
+  },
+  explainers: {
+    marginTop: spacing(2),
+    gap: spacing(1),
+  },
+  legend: {
+    marginTop: spacing(0.5),
+    marginBottom: spacing(1.75),
+    lineHeight: 17,
+  },
+  sentence: {
+    backgroundColor: colors.paperDeep,
+    borderRadius: radii.md,
+    padding: spacing(1.25),
+    marginTop: spacing(0.25),
+  },
+  sentenceText: {
+    lineHeight: 20,
+  },
+  list: {
+    gap: spacing(1.25),
+  },
+  card: {
+    gap: spacing(0.75),
+  },
+  headline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing(1),
+  },
+  aspectBadge: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing(1),
+  },
+  toneTag: {
+    paddingHorizontal: spacing(1),
+    paddingVertical: 2,
+    borderRadius: radii.sm,
+  },
+  meaning: {
+    marginTop: spacing(0.25),
+  },
+  track: {
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: colors.paperDeep,
+    overflow: 'hidden',
+    marginTop: spacing(0.5),
+  },
+  fill: {
+    height: '100%',
+    borderRadius: 2,
+  },
+});
