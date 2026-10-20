@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "scheme": "beatrizceu",
     "userInterfaceStyle": "light",
-    "backgroundColor": "#E8D6F0",
+    "backgroundColor": "#FFD8DF",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.beatrizceu.app"
@@ -15,7 +15,7 @@
     "android": {
       "package": "com.beatrizceu.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E8D6F0",
+        "backgroundColor": "#FFD8DF",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -33,7 +33,7 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#E8D6F0"
+          "backgroundColor": "#FFD8DF"
         }
       ],
       "expo-font"

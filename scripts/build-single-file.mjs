@@ -117,7 +117,7 @@ const head = FRAGMENT
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#E8D6F0">
+<meta name="theme-color" content="#FFD8DF">
 <meta name="description" content="O mapa astral da Beatriz — 18 de outubro de 2026, São Paulo.">
 ${favicon}
 `;
@@ -131,7 +131,7 @@ ${fontCss}
 /* The app paints its own solid periwinkle; the shell just gets out of the way
    and gives react-native-web the definite height its ScrollViews need. */
 html, body { height: 100%; margin: 0; padding: 0; }
-body { overflow: hidden; background: #E8D6F0; -webkit-font-smoothing: antialiased; }
+body { overflow: hidden; background: #FFD8DF; -webkit-font-smoothing: antialiased; }
 #root { display: flex; height: 100%; flex: 1; min-height: 0; }
 </style>
 ${FRAGMENT ? '' : '</head>\n<body>'}
